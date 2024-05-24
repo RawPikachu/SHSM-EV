@@ -4,7 +4,7 @@ from time import sleep
 
 
 class Motor:
-    def __init__(self, acceleration: float = 0.001, serial_port: str = "/dev/ttyAMA0"):
+    def __init__(self, acceleration: float = 0.002, serial_port: str = "/dev/ttyAMA0"):
         self.serial_port = serial_port
         self.vesc = pyvesc.VESC(self.serial_port, start_heartbeat=False)
         self.duty_cycle = 0
@@ -30,7 +30,13 @@ class Motor:
         self.loop_thread.join()
 
     def ramp_duty_cycle(self, target: float):
+        if target == 0:
+           self.duty_cycle = 0
+           return
         while abs(self.duty_cycle - target) > self.acceleration:
-            self.duty_cycle += self.acceleration
+            if target > self.duty_cycle:
+                self.duty_cycle += self.acceleration
+            else:
+                self.duty_cycle -= self.acceleration
             sleep(0.01)
         self.duty_cycle = target
