@@ -1,3 +1,4 @@
 git+https://github.com/LiamBindle/PyVESC
 pyserial
 RPi.GPIO
+rpi-hardware-pwm

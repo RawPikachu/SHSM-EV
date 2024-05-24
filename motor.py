@@ -29,7 +29,6 @@ class Motor:
         self.active = False
         self.loop_thread.join()
 
-    # TODO: Implement this
     def ramp_duty_cycle(self, target: float, time: float):
         start = self.duty_cycle
         step = (target - start) / time
