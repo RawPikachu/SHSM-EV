@@ -26,6 +26,7 @@ while True:
     else:
         motor.stop_running = True
         motor.ramp_duty_cycle(0)
+        motor.duty_cycle = 0
 
     if log_count % 10 == 0:
         print(f"Current Duty Cycle: {motor.duty_cycle}")
