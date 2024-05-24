@@ -40,7 +40,7 @@ class Motor:
                 self.duty_cycle += self.acceleration
             else:
                 self.duty_cycle -= self.acceleration
-            sleep(0.01)
+            await sleep(0.01)
 
         if self.stop_running:
             self.duty_cycle = 0

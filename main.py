@@ -33,7 +33,7 @@ async def main():
             print(f"Current Duty Cycle: {motor.duty_cycle}")
 
         log_count += 1
-        sleep(0.01)
+        await sleep(0.01)
 
 
 run(main())
