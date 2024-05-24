@@ -12,6 +12,7 @@ log_count = 0
 
 while True:
     if GPIO.input(17):
+        motor.stop_running = False
         if GPIO.input(27):
             if GPIO.input(22):
                 if GPIO.input(23):
@@ -23,6 +24,7 @@ while True:
         else:
             motor.ramp_duty_cycle(0.1)
     else:
+        motor.stop_running = True
         motor.ramp_duty_cycle(0)
 
     if log_count % 10 == 0:
