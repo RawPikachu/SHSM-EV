@@ -15,6 +15,8 @@ duty_cycle = 0
 
 
 def input_loop():
+    global log_count, duty_cycle
+
     while True:
         if GPIO.input(17):
             motor.stop_running = False
