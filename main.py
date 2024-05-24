@@ -12,18 +12,21 @@ log_count = 0
 
 while True:
     if GPIO.input(17):
-        motor.ramp_duty_cycle(0.1)
         if GPIO.input(27):
-            motor.ramp_duty_cycle(0.25)
             if GPIO.input(22):
-                motor.ramp_duty_cycle(0.5)
                 if GPIO.input(23):
                     motor.ramp_duty_cycle(0.8)
+                else:
+                    motor.ramp_duty_cycle(0.5)
+            else:
+                motor.ramp_duty_cycle(0.25)
+        else:
+            motor.ramp_duty_cycle(0.1)
     else:
         motor.ramp_duty_cycle(0)
 
-    if log_count % 1000 == 0:
+    if log_count % 10 == 0:
         print(f"Current Duty Cycle: {motor.duty_cycle}")
 
     log_count += 1
-    sleep(0.001)
+    sleep(0.1)
