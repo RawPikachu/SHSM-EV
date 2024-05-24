@@ -14,11 +14,8 @@ class Motor:
         self.stop_running = False
 
     def update_loop(self):
-        last_cycle = self.duty_cycle
         while True:
-            if self.duty_cycle != last_cycle:
-                self.vesc.set_duty_cycle(self.duty_cycle)
-            last_cycle = self.duty_cycle
+            self.vesc.set_duty_cycle(self.duty_cycle)
 
     def start(self):
         self.vesc.start_heartbeat()
