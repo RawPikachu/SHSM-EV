@@ -1,6 +1,6 @@
 import pyvesc
 import threading
-from time import sleep
+from asyncio import sleep
 
 
 class Motor:
@@ -27,25 +27,22 @@ class Motor:
         self.active = False
         self.loop_thread.join()
 
-    def ramp_duty_cycle(self, target: float):
-        def _ramp():
-            if target == 0:
-                self.duty_cycle = 0
-                return
+    async def ramp_duty_cycle(self, target: float):
+        if target == 0:
+            self.duty_cycle = 0
+            return
 
-            while abs(self.duty_cycle - target) > self.acceleration:
-                if self.stop_running:
-                    self.duty_cycle = 0
-                    return
-                if target > self.duty_cycle:
-                    self.duty_cycle += self.acceleration
-                else:
-                    self.duty_cycle -= self.acceleration
-                sleep(0.01)
-
+        while abs(self.duty_cycle - target) > self.acceleration:
             if self.stop_running:
                 self.duty_cycle = 0
                 return
-            self.duty_cycle = target
+            if target > self.duty_cycle:
+                self.duty_cycle += self.acceleration
+            else:
+                self.duty_cycle -= self.acceleration
+            sleep(0.01)
 
-        threading.Thread(target=_ramp).start()
+        if self.stop_running:
+            self.duty_cycle = 0
+            return
+        self.duty_cycle = target
