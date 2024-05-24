@@ -8,6 +8,8 @@ GPIO.setup((17, 27, 22, 23), GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 motor = Motor()
 motor.start()
 
+log_count = 0
+
 while True:
     if GPIO.input(17):
         motor.ramp_duty_cycle(0.1)
@@ -20,4 +22,8 @@ while True:
     else:
         motor.ramp_duty_cycle(0)
 
+    if log_count % 1000 == 0:
+        print(f"Current Duty Cycle: {motor.duty_cycle}")
+
+    log_count += 1
     sleep(0.001)
