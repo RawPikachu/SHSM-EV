@@ -28,21 +28,24 @@ class Motor:
         self.loop_thread.join()
 
     def ramp_duty_cycle(self, target: float):
-        if target == 0:
-            self.duty_cycle = 0
-            return
+        def _ramp():
+            if target == 0:
+                self.duty_cycle = 0
+                return
 
-        while abs(self.duty_cycle - target) > self.acceleration:
+            while abs(self.duty_cycle - target) > self.acceleration:
+                if self.stop_running:
+                    self.duty_cycle = 0
+                    return
+                if target > self.duty_cycle:
+                    self.duty_cycle += self.acceleration
+                else:
+                    self.duty_cycle -= self.acceleration
+                sleep(0.01)
+
             if self.stop_running:
                 self.duty_cycle = 0
                 return
-            if target > self.duty_cycle:
-                self.duty_cycle += self.acceleration
-            else:
-                self.duty_cycle -= self.acceleration
-            sleep(0.01)
+            self.duty_cycle = target
 
-        if self.stop_running:
-            self.duty_cycle = 0
-            return
-        self.duty_cycle = target
+        threading.Thread(target=_ramp).start()
