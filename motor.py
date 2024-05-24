@@ -4,7 +4,7 @@ from time import sleep
 
 
 class Motor:
-    def __init__(self, acceleration: float = 0.004, serial_port: str = "/dev/ttyAMA0"):
+    def __init__(self, acceleration: float = 0.012, serial_port: str = "/dev/ttyAMA0"):
         self.serial_port = serial_port
         self.vesc = pyvesc.VESC(self.serial_port, start_heartbeat=False)
         self.duty_cycle = 0
