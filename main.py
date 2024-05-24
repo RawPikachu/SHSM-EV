@@ -25,11 +25,11 @@ def input_loop():
                     if GPIO.input(23):
                         duty_cycle = 0.8
                     else:
-                        duty_cycle = 0.5
+                        duty_cycle = 0.6
                 else:
-                    duty_cycle = 0.25
+                    duty_cycle = 0.4
             else:
-                duty_cycle = 0.1
+                duty_cycle = 0.2
         else:
             motor.stop_running = True
             motor.duty_cycle = 0
