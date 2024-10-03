@@ -44,5 +44,6 @@ def input_loop():
 threading.Thread(target=input_loop).start()
 
 while True:
-    motor.ramp_duty_cycle(duty_cycle)
+    # motor.ramp_duty_cycle(duty_cycle)
+    motor.vesc.set_duty_cycle(duty_cycle)
     sleep(0.01)
